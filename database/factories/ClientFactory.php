@@ -18,8 +18,8 @@ class ClientFactory extends Factory
     public function definition()
     {
         return [
-            'address_id' => fake()->numberBetween(1,10),
-            'user_id' => User::factory()
+            'address_id' => fake()->numberBetween(1, 10),
+            'user_id' => User::factory(),
         ];
     }
 }

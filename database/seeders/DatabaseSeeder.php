@@ -16,9 +16,9 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-                AddressSeeder::class,
-                CompanySeeder::class,
-                UserSeeder::class
+            AddressSeeder::class,
+            CompanySeeder::class,
+            UserSeeder::class
         ]);
 
         DB::unprepared("REFRESH MATERIALIZED VIEW sales_commission_view");

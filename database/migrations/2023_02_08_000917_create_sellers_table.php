@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -14,7 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        DB::unprepared("CREATE UNIQUE INDEX user_email_index on users(email) WHERE deleted_at IS NULL");
+        Schema::create('sellers', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('company_id')->constrained();
+            $table->foreignId('user_id')->constrained();
+            $table->timestamps();
+            $table->softDeletes();
+        });
     }
 
     /**
@@ -24,8 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('users', function(Blueprint $table){
-            $table->dropIndex('user_email_index');
-        });
+        Schema::dropIfExists('sellers');
     }
 };

@@ -1,54 +1,58 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="text-xl font-semibold leading-tight text-gray-800">
 
+    <x-slot name="header">
+        <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
+            {{ __('Clients') }}
         </h2>
     </x-slot>
     <div class="py-12">
-        <div class="mx-auto max-w-7xl sm:px-10 lg:px-10">
-            <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    <a class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-white uppercase transition duration-150 ease-in-out bg-gray-800 border border-transparent rounded-md hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" href="{{ route('clients.create') }}"> Create New Client</a>
+        <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+            <div class="px-4 sm:px-6 lg:px-8">
+                <div class="mb-4 sm:flex-auto">
+                    <p class="mt-2 text-sm text-gray-700">A list of all the clients.</p>
+                    <a class="text-sm text-blue-600 underline rounded-md dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('clients.create') }}">
+                        {{ __('Create client') }}
+                    </a>
+                  </div>
                 </div>
-
-                <table class="min-w-full table-auto">
-                    <tr>
-                        <th class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">Email</th>
-                        <th class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">Name</th>
-                        <th class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">Actions</th>
-                    </tr>
-                    @foreach ($clients as $client)
+                <div class="max-w-2xl overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                    <table class="divide-y divide-gray-300">
+                      <thead class="bg-gray-50">
                         <tr>
-                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                <img src="{{ asset('images/' . $client->user->email) }}"  class="w-10 h-10 rounded-full" />
-                            </td>
-                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{ $client->name }}</td>
-                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                <form onsubmit="return confirm('Confirm delete this client?');" action="{{ route('clients.destroy',$client->id) }}" method="POST">
-                                    <div class="flex flex-nowrap">
-
-
-                                    <a href="{{ route('clients.edit', [$client->id, 'page'=>$clients->currentPage()]) }}">
-                                        editar
-                                    </a>
-
-                                    @csrf
-                                    @method('DELETE')
-                                    <input type="hidden" name="page" value="{{ $clients->currentPage() }}" />
-                                    <button type="submit" class="btn btn-danger">
-                                       excluir
-                                    </button>
-                                </div>
-                                </form>
-                            </td>
+                          <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Name</th>
+                          <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Email</th>
+                          <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">City</th>
+                          <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">State</th>
+                          <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                            <span class="sr-only">Edit</span>
+                          </th>
+                          <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                            <span class="sr-only">Delete</span>
+                          </th>
                         </tr>
-                    @endforeach
-                </table>
+                      </thead>
+                      <tbody class="bg-white divide-y divide-gray-200">
+                        @foreach ($clients as $client)
+                            <tr>
+                                <td class="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 whitespace-nowrap sm:pl-6">{{ $client->user->name }}</td>
+                                <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">{{ $client->user->email }}</td>
+                                <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">{{ $client->address->city }}</td>
+                                <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">{{ $client->address->state }}</td>
+                                <td class="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6">
+                                <a href="{{ route('clients.edit', $client->id) }}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                                </td>
+                                <td class="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6">
+                                    delete
+                                </td>
+                            </tr>
+                        @endforeach
+                        <!-- More people... -->
+                      </tbody>
+                    </table>
+                  </div>
+                  {{ $clients->links() }}
+              </div>
 
-            </div>
         </div>
     </div>
-
-    {!! $clients->links() !!}
-
 </x-app-layout>

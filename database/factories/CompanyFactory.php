@@ -17,7 +17,7 @@ class CompanyFactory extends Factory
     public function definition()
     {
         return [
-            'commission_rate' => fake()->numberBetween(1,6),
+            'commission_rate' => fake()->numberBetween(1, 6),
             'name' => fake()->company()
         ];
     }

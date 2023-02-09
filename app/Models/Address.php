@@ -19,5 +19,5 @@ class Address extends Model
     {
         return $this->hasMany(Client::class);
     }
-
+    
 }

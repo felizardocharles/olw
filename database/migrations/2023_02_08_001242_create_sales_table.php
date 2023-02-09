@@ -13,10 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('sellers', function (Blueprint $table) {
+        Schema::create('sales', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
-            $table->foreignId('company_id')->constrained();
+            $table->foreignId('seller_id')->constrained();
+            $table->foreignId('client_id')->constrained();
+            $table->timestamp('sold_at');
+            $table->char('status', 1);
+            $table->integer('total_amount');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -29,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sellers');
+        Schema::dropIfExists('sales');
     }
 };

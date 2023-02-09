@@ -29,7 +29,6 @@ class Sale extends Model
         return $this->belongsTo(Client::class);
     }
 
-
     public function seller(): BelongsTo
     {
         return $this->belongsTo(Seller::class);

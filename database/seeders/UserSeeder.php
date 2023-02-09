@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Seller;
 use App\Models\User;
-use App\Models\Sale;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -17,9 +16,10 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        User::factory(1000)
-        ->count(100)
-        ->has(Seller::factory())->hasSales(30)
-        ->create();
+        User::factory()
+            ->count(100)
+            ->has(Seller::factory()
+                ->hasSales(30))
+            ->create();
     }
 }
