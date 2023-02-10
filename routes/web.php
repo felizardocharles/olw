@@ -39,11 +39,11 @@ Route::middleware('auth')->group(function () {
 
         $config =  OpenAI::completions()->create([
             'model' => 'text-davinci-003',
-            'prompt' => "Considerando a lista de campos ($fields), gere uma configuração json do Vega-lite v5 (sem campo de dados e com descrição) que atenda o seguinte pedido $question. Resposta:",
+            'prompt' => "Considerando a lista de campos ($fields), gere uma configuração json incluindo dados fictícios para cada ano mencionado do Vega-lite v5 (sem campo de dados e com descrição) que atenda o seguinte pedido: '$question'. Resposta:",
             'max_tokens' => 1500
         ])->choices[0]->text;
 
-        return $config;
+        return $fields.'<br />'.$config;
     });
 });
 
